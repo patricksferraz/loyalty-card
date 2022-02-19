@@ -11,7 +11,8 @@ import (
 
 func init() {
 	govalidator.TagMap["doc"] = govalidator.Validator(func(str string) bool {
-		return brdoc.IsCNPJ(str) || brdoc.IsCPF(str)
+		doc := utils.OnlyDigits(str)
+		return brdoc.IsCNPJ(doc) || brdoc.IsCPF(doc)
 	})
 
 	govalidator.SetFieldsRequiredByDefault(true)
@@ -20,11 +21,10 @@ func init() {
 type Guest struct {
 	Base `json:",inline" valid:"-"`
 	Name *string `json:"name" gorm:"column:name;not null" valid:"required"`
-	Doc  *string `json:"doc" gorm:"column:doc;type:varchar(15)" valid:"doc,optional"`
+	Doc  *string `json:"doc,omitempty" gorm:"column:doc;type:varchar(15)" valid:"doc,optional"`
 }
 
 func NewGuest(name, doc *string) (*Guest, error) {
-	utils.OnlyDigits(doc)
 	e := Guest{
 		Name: name,
 		Doc:  doc,

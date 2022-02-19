@@ -70,3 +70,86 @@ func (t *RestService) FindGuest(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusOK).JSON(guest)
 }
+
+// CreateScore godoc
+// @Summary create a new score
+// @ID createScore
+// @Tags Score
+// @Description Router for create a new score
+// @Accept json
+// @Produce json
+// @Param body body CreateScoreRequest true "JSON body for create a new score"
+// @Success 200 {object} IDResponse
+// @Failure 400 {object} HTTPResponse
+// @Failure 403 {object} HTTPResponse
+// @Router /scores [post]
+func (t *RestService) CreateScore(c *fiber.Ctx) error {
+	var req CreateScoreRequest
+
+	if err := c.BodyParser(&req); err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(HTTPResponse{Msg: err.Error()})
+	}
+
+	scoreID, err := t.Service.CreateScore(c.Context(), &req.GuestID, &req.Description, &req.Tags)
+	if err != nil {
+		return c.Status(fiber.StatusForbidden).JSON(HTTPResponse{Msg: err.Error()})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(IDResponse{ID: *scoreID})
+}
+
+// FindScore godoc
+// @Summary find a score
+// @ID findScore
+// @Tags Score
+// @Description Router for find a score
+// @Accept json
+// @Produce json
+// @Param score_id path string true "Score ID"
+// @Success 200 {object} Score
+// @Failure 400 {object} HTTPResponse
+// @Failure 403 {object} HTTPResponse
+// @Router /scores/{score_id} [get]
+func (t *RestService) FindScore(c *fiber.Ctx) error {
+	scoreID := c.Params("score_id")
+	if !govalidator.IsUUIDv4(scoreID) {
+		return c.Status(fiber.StatusBadRequest).JSON(HTTPResponse{
+			Msg: "score_id is not a valid uuid",
+		})
+	}
+
+	score, err := t.Service.FindScore(c.Context(), &scoreID)
+	if err != nil {
+		return c.Status(fiber.StatusForbidden).JSON(HTTPResponse{Msg: err.Error()})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(score)
+}
+
+// UseScore godoc
+// @Summary use a score
+// @ID useScore
+// @Tags Score
+// @Description Router for use a score
+// @Accept json
+// @Produce json
+// @Param score_id path string true "Score ID"
+// @Success 200 {object} HTTPResponse
+// @Failure 400 {object} HTTPResponse
+// @Failure 403 {object} HTTPResponse
+// @Router /scores/{score_id}/use [post]
+func (t *RestService) UseScore(c *fiber.Ctx) error {
+	scoreID := c.Params("score_id")
+	if !govalidator.IsUUIDv4(scoreID) {
+		return c.Status(fiber.StatusBadRequest).JSON(HTTPResponse{
+			Msg: "score_id is not a valid uuid",
+		})
+	}
+
+	err := t.Service.UseScore(c.Context(), &scoreID)
+	if err != nil {
+		return c.Status(fiber.StatusForbidden).JSON(HTTPResponse{Msg: err.Error()})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(HTTPResponse{Msg: "successful request"})
+}

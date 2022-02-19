@@ -9,12 +9,12 @@ import (
 	_ "gorm.io/driver/sqlite"
 )
 
-type PostgreSQL struct {
+type DbOrm struct {
 	Db *gorm.DB
 }
 
-func NewPostgreSQL(dsnType, dsn string) (*PostgreSQL, error) {
-	pg := &PostgreSQL{}
+func NewDbOrm(dsnType, dsn string) (*DbOrm, error) {
+	pg := &DbOrm{}
 
 	err := pg.connect(dsnType, dsn)
 	if err != nil {
@@ -24,7 +24,7 @@ func NewPostgreSQL(dsnType, dsn string) (*PostgreSQL, error) {
 	return pg, nil
 }
 
-func (p *PostgreSQL) connect(dsnType, dsn string) error {
+func (p *DbOrm) connect(dsnType, dsn string) error {
 	db, err := gorm.Open(dsnType, dsn)
 	if err != nil {
 		return fmt.Errorf("error connecting to database: %v", err)
@@ -35,12 +35,13 @@ func (p *PostgreSQL) connect(dsnType, dsn string) error {
 	return nil
 }
 
-func (p *PostgreSQL) Debug(enable bool) {
+func (p *DbOrm) Debug(enable bool) {
 	p.Db.LogMode(enable)
 }
 
-func (p *PostgreSQL) Migrate() {
+func (p *DbOrm) Migrate() {
 	p.Db.AutoMigrate(
 		&entity.Guest{},
+		&entity.Score{},
 	)
 }

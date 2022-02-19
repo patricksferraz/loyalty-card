@@ -31,21 +31,21 @@ func restCmd() *cobra.Command {
 		Short: "Run rest Service",
 
 		Run: func(cmd *cobra.Command, args []string) {
-			pg, err := db.NewPostgreSQL(*conf.Db.DsnType, *conf.Db.Dsn)
+			orm, err := db.NewDbOrm(*conf.Db.DsnType, *conf.Db.Dsn)
 			if err != nil {
 				log.Fatal(err)
 			}
 
 			if *conf.Db.Debug {
-				pg.Debug(true)
+				orm.Debug(true)
 			}
 
 			if *conf.Db.Migrate {
-				pg.Migrate()
+				orm.Migrate()
 			}
-			defer pg.Db.Close()
+			defer orm.Db.Close()
 
-			rest.StartRestServer(pg, *conf.RestPort)
+			rest.StartRestServer(orm, *conf.RestPort)
 		},
 	}
 
