@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loyalty-card
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: loyalty-card
+  template:
+    metadata:
+      labels:
+        app: loyalty-card
+    spec:
+      containers:
+      - name: loyalty-card
+        image: ghcr.io/c-4u/loyalty-card
+        ports:
+        - name: rest
+          containerPort: 8080
+        envFrom:
+          - secretRef:
+              name: loyalty-card-secret
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "50m"
+
+      imagePullSecrets:
+          - name: regsecret
