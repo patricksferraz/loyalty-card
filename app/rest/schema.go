@@ -1,6 +1,8 @@
 package rest
 
-import "time"
+import (
+	"time"
+)
 
 type Base struct {
 	ID        string    `json:"id"`
@@ -18,11 +20,23 @@ type IDResponse struct {
 
 type CreateGuestRequest struct {
 	Name string `json:"name"`
-	Doc  string `json:"doc"`
+	Doc  string `json:"doc,omitempty"`
 }
 
 type Guest struct {
-	Base `json:",inline"`
-	Name string `json:"name"`
-	Doc  string `json:"doc"`
+	Base               `json:",inline"`
+	CreateGuestRequest `json:",inline"`
+}
+
+type CreateScoreRequest struct {
+	Description string   `json:"description,omitempty"`
+	Tags        []string `json:"tags,omitempty"`
+	GuestID     string   `json:"guest_id"`
+}
+
+type Score struct {
+	Base               `json:",inline"`
+	CreateGuestRequest `json:",inline"`
+	WasUsed            bool      `json:"was_used"`
+	UsedIn             time.Time `json:"used_in,omitempty"`
 }

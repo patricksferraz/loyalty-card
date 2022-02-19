@@ -10,4 +10,8 @@ type RepoInterface interface {
 	CreateGuest(ctx context.Context, guest *entity.Guest) error
 	FindGuest(ctx context.Context, guestID *string) (*entity.Guest, error)
 	SaveGuest(ctx context.Context, guest *entity.Guest) error
+
+	CreateScore(ctx context.Context, score *entity.Score) error
+	FindScore(ctx context.Context, scoreID *string) (*entity.Score, error)
+	SaveScore(ctx context.Context, score *entity.Score) error
 }

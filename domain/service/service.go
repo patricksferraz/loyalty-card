@@ -38,3 +38,49 @@ func (s *Service) FindGuest(ctx context.Context, guestID *string) (*entity.Guest
 
 	return guest, nil
 }
+
+func (s *Service) CreateScore(ctx context.Context, guestID, description *string, tags *[]string) (*string, error) {
+	guest, err := s.Repo.FindGuest(ctx, guestID)
+	if err != nil {
+		return nil, err
+	}
+
+	score, err := entity.NewScore(description, tags, guest)
+	if err != nil {
+		return nil, err
+	}
+
+	if err = s.Repo.CreateScore(ctx, score); err != nil {
+		return nil, err
+	}
+
+	return score.ID, nil
+}
+
+func (s *Service) FindScore(ctx context.Context, scoreID *string) (*entity.Score, error) {
+	score, err := s.Repo.FindScore(ctx, scoreID)
+	if err != nil {
+		return nil, err
+	}
+
+	return score, nil
+}
+
+func (s *Service) UseScore(ctx context.Context, scoreID *string) error {
+	score, err := s.Repo.FindScore(ctx, scoreID)
+	if err != nil {
+		return err
+	}
+
+	err = score.Use()
+	if err != nil {
+		return err
+	}
+
+	err = s.Repo.SaveScore(ctx, score)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

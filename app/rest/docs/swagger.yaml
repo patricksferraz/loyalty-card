@@ -7,6 +7,17 @@ definitions:
       name:
         type: string
     type: object
+  rest.CreateScoreRequest:
+    properties:
+      description:
+        type: string
+      guest_id:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+    type: object
   rest.Guest:
     properties:
       created_at:
@@ -31,11 +42,28 @@ definitions:
       id:
         type: string
     type: object
+  rest.Score:
+    properties:
+      created_at:
+        type: string
+      doc:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      updated_at:
+        type: string
+      used_in:
+        type: string
+      was_used:
+        type: boolean
+    type: object
 info:
   contact:
     email: oi@coding4u.com.br
     name: Coding4u
-  description: Swagger API for Guest Service.
+  description: Swagger API for Loyalty Card Service.
   termsOfService: http://swagger.io/terms/
   title: Loyalty Card Swagger API
   version: "1.0"
@@ -101,6 +129,97 @@ paths:
       summary: find a gust
       tags:
       - Guest
+  /scores:
+    post:
+      consumes:
+      - application/json
+      description: Router for create a new score
+      operationId: createScore
+      parameters:
+      - description: JSON body for create a new score
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/rest.CreateScoreRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/rest.IDResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/rest.HTTPResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/rest.HTTPResponse'
+      summary: create a new score
+      tags:
+      - Score
+  /scores/{score_id}:
+    get:
+      consumes:
+      - application/json
+      description: Router for find a score
+      operationId: findScore
+      parameters:
+      - description: Score ID
+        in: path
+        name: score_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/rest.Score'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/rest.HTTPResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/rest.HTTPResponse'
+      summary: find a score
+      tags:
+      - Score
+  /scores/{score_id}/use:
+    post:
+      consumes:
+      - application/json
+      description: Router for use a score
+      operationId: useScore
+      parameters:
+      - description: Score ID
+        in: path
+        name: score_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/rest.HTTPResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/rest.HTTPResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/rest.HTTPResponse'
+      summary: use a score
+      tags:
+      - Score
 securityDefinitions:
   ApiKeyAuth:
     in: header

@@ -23,6 +23,10 @@ func PTime(t time.Time) *time.Time {
 	return &t
 }
 
+func PBool(b bool) *bool {
+	return &b
+}
+
 func GetEnv(key string, defaultVal string) string {
 	if value, exists := os.LookupEnv(key); exists {
 		return value
@@ -31,13 +35,13 @@ func GetEnv(key string, defaultVal string) string {
 	return defaultVal
 }
 
-func OnlyDigits(str *string) {
+func OnlyDigits(str string) string {
 	buf := bytes.NewBufferString("")
-	for _, r := range *str {
+	for _, r := range str {
 		if unicode.IsDigit(r) {
 			buf.WriteRune(r)
 		}
 	}
 
-	*str = buf.String()
+	return buf.String()
 }

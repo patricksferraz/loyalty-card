@@ -9,24 +9,24 @@ import (
 )
 
 type Repository struct {
-	Pg *db.PostgreSQL
+	Orm *db.DbOrm
 }
 
-func NewRepository(pg *db.PostgreSQL) *Repository {
+func NewRepository(orm *db.DbOrm) *Repository {
 	return &Repository{
-		Pg: pg,
+		Orm: orm,
 	}
 }
 
 func (r *Repository) CreateGuest(ctx context.Context, guest *entity.Guest) error {
-	err := r.Pg.Db.Create(guest).Error
+	err := r.Orm.Db.Create(guest).Error
 	return err
 }
 
 func (r *Repository) FindGuest(ctx context.Context, guestID *string) (*entity.Guest, error) {
 	var e entity.Guest
 
-	r.Pg.Db.First(&e, "id = ?", *guestID)
+	r.Orm.Db.First(&e, "id = ?", *guestID)
 
 	if e.ID == nil {
 		return nil, fmt.Errorf("no guest found")
@@ -36,6 +36,28 @@ func (r *Repository) FindGuest(ctx context.Context, guestID *string) (*entity.Gu
 }
 
 func (r *Repository) SaveGuest(ctx context.Context, guest *entity.Guest) error {
-	err := r.Pg.Db.Save(guest).Error
+	err := r.Orm.Db.Save(guest).Error
+	return err
+}
+
+func (r *Repository) CreateScore(ctx context.Context, score *entity.Score) error {
+	err := r.Orm.Db.Create(score).Error
+	return err
+}
+
+func (r *Repository) FindScore(ctx context.Context, scoreID *string) (*entity.Score, error) {
+	var e entity.Score
+
+	r.Orm.Db.First(&e, "id = ?", *scoreID)
+
+	if e.ID == nil {
+		return nil, fmt.Errorf("no score found")
+	}
+
+	return &e, nil
+}
+
+func (r *Repository) SaveScore(ctx context.Context, score *entity.Score) error {
+	err := r.Orm.Db.Save(score).Error
 	return err
 }
