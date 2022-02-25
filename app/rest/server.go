@@ -48,6 +48,12 @@ func StartRestServer(orm *db.DbOrm, port int) {
 		score.Post("", restService.CreateScore)
 		score.Get("/:score_id", restService.FindScore)
 		score.Post("/:score_id/use", restService.UseScore)
+		score.Post("/:score_id/tags", restService.AddTag)
+
+		tag := v1.Group("/tags")
+		tag.Post("", restService.CreateTag)
+		tag.Get("", restService.SearchTags)
+		tag.Get("/:tag_id", restService.FindTag)
 	}
 
 	addr := fmt.Sprintf("0.0.0.0:%d", port)
