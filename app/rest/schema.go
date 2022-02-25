@@ -29,9 +29,9 @@ type Guest struct {
 }
 
 type CreateScoreRequest struct {
-	Description string   `json:"description,omitempty"`
-	Tags        []string `json:"tags,omitempty"`
-	GuestID     string   `json:"guest_id"`
+	Date        time.Time `json:"date" time_format:"RFC3339"`
+	Description string    `json:"description,omitempty"`
+	GuestID     string    `json:"guest_id"`
 }
 
 type Score struct {
@@ -39,4 +39,22 @@ type Score struct {
 	CreateGuestRequest `json:",inline"`
 	WasUsed            bool      `json:"was_used"`
 	UsedIn             time.Time `json:"used_in,omitempty"`
+	Tags               []Tag     `json:"tags,omitempty"`
+}
+
+type CreateTagRequest struct {
+	Name string `json:"name"`
+}
+
+type Tag struct {
+	Base             `json:",inline"`
+	CreateTagRequest `json:",inline"`
+}
+
+type AddTagRequest struct {
+	TagID string `json:"tag_id"`
+}
+
+type SearchTagsRequest struct {
+	Name string `query:"name"`
 }

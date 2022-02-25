@@ -5,7 +5,6 @@ import (
 
 	"github.com/asaskevich/govalidator"
 	"github.com/c-4u/loyalty-card/utils"
-	"github.com/lib/pq"
 	uuid "github.com/satori/go.uuid"
 )
 
@@ -15,19 +14,20 @@ func init() {
 
 type Score struct {
 	Base        `json:",inline" valid:"-"`
-	Description *string        `json:"description,omitempty" gorm:"column:description;type:varchar(255)" valid:"-"`
-	WasUsed     *bool          `json:"was_used" gorm:"column:was_used;not null" valid:"-"`
-	UsedIn      *time.Time     `json:"used_in,omitempty" gorm:"column:used_in" valid:"-"`
-	Tags        pq.StringArray `json:"tags,omitempty" gorm:"column:tags;type:text[]" valid:"-"`
-	GuestID     *string        `json:"guest_id" gorm:"column:guest_id;type:uuid;not null" valid:"uuid"`
-	Guest       *Guest         `json:"-" valid:"-"`
+	Date        *time.Time `json:"date" gorm:"column:date;not null" valid:"required"`
+	Description *string    `json:"description,omitempty" gorm:"column:description;type:varchar(255)" valid:"-"`
+	WasUsed     *bool      `json:"was_used" gorm:"column:was_used;not null" valid:"-"`
+	UsedIn      *time.Time `json:"used_in,omitempty" gorm:"column:used_in" valid:"-"`
+	Tags        []*Tag     `json:"tags,omitempty" gorm:"many2many:scores_tags" valid:"-"`
+	GuestID     *string    `json:"guest_id" gorm:"column:guest_id;type:uuid;not null" valid:"uuid"`
+	Guest       *Guest     `json:"-" valid:"-"`
 }
 
-func NewScore(description *string, tags *[]string, guest *Guest) (*Score, error) {
+func NewScore(date *time.Time, description *string, guest *Guest) (*Score, error) {
 	e := Score{
+		Date:        date,
 		Description: description,
 		WasUsed:     utils.PBool(false),
-		Tags:        *tags,
 		GuestID:     guest.ID,
 		Guest:       guest,
 	}
@@ -50,6 +50,13 @@ func (e *Score) IsValid() error {
 func (e *Score) Use() error {
 	e.WasUsed = utils.PBool(true)
 	e.UsedIn = utils.PTime(time.Now())
+	e.UpdatedAt = utils.PTime(time.Now())
+	err := e.IsValid()
+	return err
+}
+
+func (e *Score) AddTag(tag *Tag) error {
+	e.Tags = append(e.Tags, tag)
 	e.UpdatedAt = utils.PTime(time.Now())
 	err := e.IsValid()
 	return err

@@ -43,5 +43,6 @@ func (p *DbOrm) Migrate() {
 	p.Db.AutoMigrate(
 		&entity.Guest{},
 		&entity.Score{},
+		&entity.Tag{},
 	)
 }

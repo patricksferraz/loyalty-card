@@ -212,6 +212,60 @@ var doc = `{
                 }
             }
         },
+        "/scores/{score_id}/tags": {
+            "post": {
+                "description": "Router for add a tag to a score",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Score"
+                ],
+                "summary": "add a tag to a score",
+                "operationId": "addTag",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Score ID",
+                        "name": "score_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "JSON body for add a tag to a score",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/rest.AddTagRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/rest.HTTPResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/rest.HTTPResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/rest.HTTPResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/scores/{score_id}/use": {
             "post": {
                 "description": "Router for use a score",
@@ -256,9 +310,153 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/tags": {
+            "get": {
+                "description": "Router for search tags",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tag"
+                ],
+                "summary": "search tags",
+                "operationId": "searchTags",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "name",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/rest.Tag"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/rest.HTTPResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/rest.HTTPResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Router for create a new tag",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tag"
+                ],
+                "summary": "create a new tag",
+                "operationId": "createTag",
+                "parameters": [
+                    {
+                        "description": "JSON body for create a new tag",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/rest.CreateTagRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/rest.IDResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/rest.HTTPResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/rest.HTTPResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/tags/{tag_id}": {
+            "get": {
+                "description": "Router for find a tag",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tag"
+                ],
+                "summary": "find a tag",
+                "operationId": "findTag",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Tag ID",
+                        "name": "tag_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/rest.Tag"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/rest.HTTPResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/rest.HTTPResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "rest.AddTagRequest": {
+            "type": "object",
+            "properties": {
+                "tag_id": {
+                    "type": "string"
+                }
+            }
+        },
         "rest.CreateGuestRequest": {
             "type": "object",
             "properties": {
@@ -273,17 +471,22 @@ var doc = `{
         "rest.CreateScoreRequest": {
             "type": "object",
             "properties": {
+                "date": {
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },
                 "guest_id": {
                     "type": "string"
-                },
-                "tags": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                }
+            }
+        },
+        "rest.CreateTagRequest": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
                 }
             }
         },
@@ -339,6 +542,12 @@ var doc = `{
                 "name": {
                     "type": "string"
                 },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.Tag"
+                    }
+                },
                 "updated_at": {
                     "type": "string"
                 },
@@ -347,6 +556,23 @@ var doc = `{
                 },
                 "was_used": {
                     "type": "boolean"
+                }
+            }
+        },
+        "rest.Tag": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
                 }
             }
         }

@@ -1,5 +1,10 @@
 basePath: /api/v1
 definitions:
+  rest.AddTagRequest:
+    properties:
+      tag_id:
+        type: string
+    type: object
   rest.CreateGuestRequest:
     properties:
       doc:
@@ -9,14 +14,17 @@ definitions:
     type: object
   rest.CreateScoreRequest:
     properties:
+      date:
+        type: string
       description:
         type: string
       guest_id:
         type: string
-      tags:
-        items:
-          type: string
-        type: array
+    type: object
+  rest.CreateTagRequest:
+    properties:
+      name:
+        type: string
     type: object
   rest.Guest:
     properties:
@@ -52,12 +60,27 @@ definitions:
         type: string
       name:
         type: string
+      tags:
+        items:
+          $ref: '#/definitions/rest.Tag'
+        type: array
       updated_at:
         type: string
       used_in:
         type: string
       was_used:
         type: boolean
+    type: object
+  rest.Tag:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      updated_at:
+        type: string
     type: object
 info:
   contact:
@@ -190,6 +213,42 @@ paths:
       summary: find a score
       tags:
       - Score
+  /scores/{score_id}/tags:
+    post:
+      consumes:
+      - application/json
+      description: Router for add a tag to a score
+      operationId: addTag
+      parameters:
+      - description: Score ID
+        in: path
+        name: score_id
+        required: true
+        type: string
+      - description: JSON body for add a tag to a score
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/rest.AddTagRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/rest.HTTPResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/rest.HTTPResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/rest.HTTPResponse'
+      summary: add a tag to a score
+      tags:
+      - Score
   /scores/{score_id}/use:
     post:
       consumes:
@@ -220,6 +279,96 @@ paths:
       summary: use a score
       tags:
       - Score
+  /tags:
+    get:
+      consumes:
+      - application/json
+      description: Router for search tags
+      operationId: searchTags
+      parameters:
+      - in: query
+        name: name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/rest.Tag'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/rest.HTTPResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/rest.HTTPResponse'
+      summary: search tags
+      tags:
+      - Tag
+    post:
+      consumes:
+      - application/json
+      description: Router for create a new tag
+      operationId: createTag
+      parameters:
+      - description: JSON body for create a new tag
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/rest.CreateTagRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/rest.IDResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/rest.HTTPResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/rest.HTTPResponse'
+      summary: create a new tag
+      tags:
+      - Tag
+  /tags/{tag_id}:
+    get:
+      consumes:
+      - application/json
+      description: Router for find a tag
+      operationId: findTag
+      parameters:
+      - description: Tag ID
+        in: path
+        name: tag_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/rest.Tag'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/rest.HTTPResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/rest.HTTPResponse'
+      summary: find a tag
+      tags:
+      - Tag
 securityDefinitions:
   ApiKeyAuth:
     in: header
