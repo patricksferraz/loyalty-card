@@ -84,8 +84,8 @@ definitions:
     type: object
 info:
   contact:
-    email: oi@coding4u.com.br
-    name: Coding4u
+    email: patrick.ferraz@outlook.com
+    name: Patrick Ferraz
   description: Swagger API for Loyalty Card Service.
   termsOfService: http://swagger.io/terms/
   title: Loyalty Card Swagger API
@@ -149,7 +149,7 @@ paths:
           description: Forbidden
           schema:
             $ref: '#/definitions/rest.HTTPResponse'
-      summary: find a gust
+      summary: find a guest
       tags:
       - Guest
   /scores:

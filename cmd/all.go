@@ -11,9 +11,9 @@ import (
 	"runtime"
 
 	"github.com/Netflix/go-env"
-	"github.com/c-4u/loyalty-card/app/rest"
-	"github.com/c-4u/loyalty-card/infra/db"
 	"github.com/joho/godotenv"
+	"github.com/patricksferraz/loyalty-card/app/rest"
+	"github.com/patricksferraz/loyalty-card/infra/db"
 	"github.com/spf13/cobra"
 )
 

@@ -20,8 +20,8 @@ var doc = `{
         "title": "{{.Title}}",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
-            "name": "Coding4u",
-            "email": "oi@coding4u.com.br"
+            "name": "Patrick Ferraz",
+            "email": "patrick.ferraz@outlook.com"
         },
         "version": "{{.Version}}"
     },
@@ -87,7 +87,7 @@ var doc = `{
                 "tags": [
                     "Guest"
                 ],
-                "summary": "find a gust",
+                "summary": "find a guest",
                 "operationId": "findGuest",
                 "parameters": [
                     {

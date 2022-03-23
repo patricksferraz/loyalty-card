@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/c-4u/loyalty-card/domain/entity"
-	"github.com/c-4u/loyalty-card/domain/repo"
+	"github.com/patricksferraz/loyalty-card/domain/entity"
+	"github.com/patricksferraz/loyalty-card/domain/repo"
 )
 
 type Service struct {

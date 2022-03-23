@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/c-4u/loyalty-card/domain/entity"
-	"github.com/c-4u/loyalty-card/infra/db"
+	"github.com/patricksferraz/loyalty-card/domain/entity"
+	"github.com/patricksferraz/loyalty-card/infra/db"
 )
 
 type Repository struct {

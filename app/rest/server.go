@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"log"
 
-	_ "github.com/c-4u/loyalty-card/app/rest/docs"
-	"github.com/c-4u/loyalty-card/domain/service"
-	"github.com/c-4u/loyalty-card/infra/db"
-	"github.com/c-4u/loyalty-card/infra/repo"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	_ "github.com/patricksferraz/loyalty-card/app/rest/docs"
+	"github.com/patricksferraz/loyalty-card/domain/service"
+	"github.com/patricksferraz/loyalty-card/infra/db"
+	"github.com/patricksferraz/loyalty-card/infra/repo"
 	fiberSwagger "github.com/swaggo/fiber-swagger"
 )
 
@@ -18,8 +18,8 @@ import (
 // @description Swagger API for Loyalty Card Service.
 // @termsOfService http://swagger.io/terms/
 
-// @contact.name Coding4u
-// @contact.email oi@coding4u.com.br
+// @contact.name Patrick Ferraz
+// @contact.email patrick.ferraz@outlook.com
 
 // @BasePath /api/v1
 // @query.collection.format multi

@@ -22,21 +22,21 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/c-4u/loyalty-card">
+  <a href="https://github.com/patricksferraz/loyalty-card">
     <img src="img/card.png" alt="Logo" width="100" height="70">
   </a>
 
   <h3 align="center">Loyalty Card</h3>
 
   <p align="center">
-    <a href="https://github.com/c-4u/loyalty-card"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/patricksferraz/loyalty-card"><strong>Explore the docs »</strong></a>
     <!-- <br />
     <br />
-    <a href="https://github.com/c-4u/loyalty-card">View Demo</a>
+    <a href="https://github.com/patricksferraz/loyalty-card">View Demo</a>
     ·
-    <a href="https://github.com/c-4u/loyalty-card">Report Bug</a>
+    <a href="https://github.com/patricksferraz/loyalty-card">Report Bug</a>
     ·
-    <a href="https://github.com/c-4u/loyalty-card">Request Feature</a>-->
+    <a href="https://github.com/patricksferraz/loyalty-card">Request Feature</a>-->
   </p>
 </p>
 
@@ -112,7 +112,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_ --
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/c-4u/loyalty-card/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/patricksferraz/loyalty-card/issues) for a list of proposed features (and known issues).
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -148,7 +148,7 @@ Any contributions you make are **greatly appreciated**.
 1. Clone the repo
 
    ```sh
-   git clone https://github.com/c-4u/loyalty-card.git
+   git clone https://github.com/patricksferraz/loyalty-card.git
    ```
 
 2. Run
@@ -179,9 +179,9 @@ Any contributions you make are **greatly appreciated**.
 <!-- CONTACT -->
 ## Contact
 
-Coding4u - contato@coding4u.com.br - [website](http://coding4u.com.br)
+patricksferraz - patrick.ferraz@outlook.com
 
-Project Link: [loyalty-card](https://github.com/c-4u/loyalty-card)
+Project Link: [loyalty-card](https://github.com/patricksferraz/loyalty-card)
 
 <!-- ACKNOWLEDGEMENTS -->
 <!-- ## Acknowledgements
