@@ -17,14 +17,6 @@ services:
     extra_hosts:
       - 'host.docker.internal:172.17.0.1'
 
-  pgadmin:
-    image: adminer:4.8.1
-    restart: always
-    ports:
-      - 8080:8080
-    networks:
-      - loyalty-card
-
 networks:
   loyalty-card:
     driver: bridge

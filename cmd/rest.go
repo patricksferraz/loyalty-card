@@ -15,6 +15,7 @@ import (
 	"github.com/patricksferraz/loyalty-card/app/rest"
 	"github.com/patricksferraz/loyalty-card/infra/db"
 	"github.com/spf13/cobra"
+	"gorm.io/gorm/logger"
 )
 
 // restCmd represents the rest command
@@ -31,19 +32,27 @@ func restCmd() *cobra.Command {
 		Short: "Run rest Service",
 
 		Run: func(cmd *cobra.Command, args []string) {
-			orm, err := db.NewDbOrm(*conf.Db.DsnType, *conf.Db.Dsn)
+			var conf Config
+
+			_, err := env.UnmarshalFromEnviron(&conf)
 			if err != nil {
 				log.Fatal(err)
 			}
 
+			l := logger.Error
 			if *conf.Db.Debug {
-				orm.Debug(true)
+				l = logger.Info
 			}
 
-			if *conf.Db.Migrate {
-				orm.Migrate()
+			orm, err := db.NewDbOrm(*conf.Db.Dsn, l)
+			if err != nil {
+				log.Fatal(err)
 			}
-			defer orm.Db.Close()
+
+			if err = orm.Migrate(); err != nil {
+				log.Fatal(err)
+			}
+			log.Printf("migration did run successfully")
 
 			rest.StartRestServer(orm, *conf.RestPort)
 		},

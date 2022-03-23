@@ -1,5 +1,5 @@
 /*
-Copyright © 2022 NAME HERE <EMAIL ADDRESS>
+Copyright © 2022 Patrick Ferraz <patrick.ferraz@outlook.com>
 
 */
 package main
