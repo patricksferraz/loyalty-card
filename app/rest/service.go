@@ -2,8 +2,8 @@ package rest
 
 import (
 	"github.com/asaskevich/govalidator"
-	"github.com/c-4u/loyalty-card/domain/service"
 	"github.com/gofiber/fiber/v2"
+	"github.com/patricksferraz/loyalty-card/domain/service"
 )
 
 type RestService struct {
@@ -44,7 +44,7 @@ func (t *RestService) CreateGuest(c *fiber.Ctx) error {
 }
 
 // FindGuest godoc
-// @Summary find a gust
+// @Summary find a guest
 // @ID findGuest
 // @Tags Guest
 // @Description Router for find a guest

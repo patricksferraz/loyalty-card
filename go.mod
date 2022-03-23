@@ -1,4 +1,4 @@
-module github.com/c-4u/loyalty-card
+module github.com/patricksferraz/loyalty-card
 
 go 1.17
 

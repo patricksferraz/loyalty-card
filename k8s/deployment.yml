@@ -1,20 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: loyalty-card
+  name: loyalty-card-v1
+  labels:
+    app: loyalty-card
+    version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: loyalty-card
+      version: v1
   template:
     metadata:
       labels:
         app: loyalty-card
+        version: v1
     spec:
       containers:
       - name: loyalty-card
-        image: ghcr.io/c-4u/loyalty-card
+        image: ghcr.io/patricksferraz/loyalty-card
         ports:
         - name: rest
           containerPort: 8080
