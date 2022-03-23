@@ -3,20 +3,21 @@ package db
 import (
 	"fmt"
 
-	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
-	"github.com/patricksferraz/loyalty-card/domain/entity"
-	_ "gorm.io/driver/sqlite"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 type DbOrm struct {
 	Db *gorm.DB
+	M  *MigrateOrm
 }
 
-func NewDbOrm(dsnType, dsn string) (*DbOrm, error) {
+func NewDbOrm(dsn string, l logger.LogLevel) (*DbOrm, error) {
 	pg := &DbOrm{}
 
-	err := pg.connect(dsnType, dsn)
+	err := pg.connect(dsn, l)
 	if err != nil {
 		return nil, err
 	}
@@ -24,25 +25,21 @@ func NewDbOrm(dsnType, dsn string) (*DbOrm, error) {
 	return pg, nil
 }
 
-func (p *DbOrm) connect(dsnType, dsn string) error {
-	db, err := gorm.Open(dsnType, dsn)
+func (p *DbOrm) connect(dsn string, l logger.LogLevel) error {
+	db, err := gorm.Open(sqlite.Open(dsn), &gorm.Config{
+		Logger: logger.Default.LogMode(l),
+	})
 	if err != nil {
 		return fmt.Errorf("error connecting to database: %v", err)
 	}
 
 	p.Db = db
+	p.M = NewMigrateOrm(p.Db)
 
 	return nil
 }
 
-func (p *DbOrm) Debug(enable bool) {
-	p.Db.LogMode(enable)
-}
-
-func (p *DbOrm) Migrate() {
-	p.Db.AutoMigrate(
-		&entity.Guest{},
-		&entity.Score{},
-		&entity.Tag{},
-	)
+func (p *DbOrm) Migrate() error {
+	err := p.M.Migrate()
+	return err
 }
