@@ -84,7 +84,7 @@ definitions:
     type: object
 info:
   contact:
-    email: patrick.ferraz@outlook.com
+    email: patrick.ferraz@coding4u.tech
     name: Patrick Ferraz
   description: Swagger API for Loyalty Card Service.
   termsOfService: http://swagger.io/terms/

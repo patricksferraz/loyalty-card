@@ -1,6 +1,5 @@
 /*
-Copyright © 2022 Patrick Ferraz <patrick.ferraz@outlook.com>
-
+Copyright © 2022 Patrick Ferraz <patrick.ferraz@coding4u.tech>
 */
 package main
 

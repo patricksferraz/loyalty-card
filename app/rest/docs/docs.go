@@ -21,7 +21,7 @@ var doc = `{
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "name": "Patrick Ferraz",
-            "email": "patrick.ferraz@outlook.com"
+            "email": "patrick.ferraz@coding4u.tech"
         },
         "version": "{{.Version}}"
     },

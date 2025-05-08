@@ -19,7 +19,7 @@ import (
 // @termsOfService http://swagger.io/terms/
 
 // @contact.name Patrick Ferraz
-// @contact.email patrick.ferraz@outlook.com
+// @contact.email patrick.ferraz@coding4u.tech
 
 // @BasePath /api/v1
 // @query.collection.format multi

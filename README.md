@@ -1,191 +1,183 @@
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Thanks again! Now go create something AMAZING! :D
-***
-***
-***
-*** To avoid retyping too much info. Do a search and replace for the following:
-*** github_username, repo_name, twitter_handle, email, project_title, project_description
--->
+# Loyalty Card Service
 
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
+[![Go Version](https://img.shields.io/badge/go-1.18+-blue)](https://golang.org/dl/)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/patricksferraz/loyalty-card/actions)
+[![Docker](https://img.shields.io/badge/docker-ready-blue)](https://www.docker.com/)
 
-<!-- PROJECT LOGO -->
-<br />
-<p align="center">
-  <a href="https://github.com/patricksferraz/loyalty-card">
-    <img src="img/card.png" alt="Logo" width="100" height="70">
-  </a>
+---
 
-  <h3 align="center">Loyalty Card</h3>
+## Table of Contents
+- [Loyalty Card Service](#loyalty-card-service)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Demo \& API Docs](#demo--api-docs)
+  - [Features](#features)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Quickstart (Docker Compose)](#quickstart-docker-compose)
+    - [Manual Setup (Go)](#manual-setup-go)
+    - [Environment Variables](#environment-variables)
+  - [Usage](#usage)
+    - [API Endpoints](#api-endpoints)
+      - [Guests](#guests)
+      - [Scores](#scores)
+      - [Tags](#tags)
+    - [Example: Create a Guest](#example-create-a-guest)
+    - [API Documentation](#api-documentation)
+  - [Development](#development)
+    - [Makefile Commands](#makefile-commands)
+    - [Running Tests](#running-tests)
+    - [Contributing](#contributing)
+  - [Tech Stack](#tech-stack)
+  - [License](#license)
+  - [Contact \& Community](#contact--community)
+  - [Acknowledgements](#acknowledgements)
 
-  <p align="center">
-    <a href="https://github.com/patricksferraz/loyalty-card"><strong>Explore the docs »</strong></a>
-    <!-- <br />
-    <br />
-    <a href="https://github.com/patricksferraz/loyalty-card">View Demo</a>
-    ·
-    <a href="https://github.com/patricksferraz/loyalty-card">Report Bug</a>
-    ·
-    <a href="https://github.com/patricksferraz/loyalty-card">Request Feature</a>-->
-  </p>
-</p>
+---
 
-<!-- TABLE OF CONTENTS -->
-<details open="open">
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <!-- <li><a href="#usage">Usage</a></li> -->
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <!-- <li><a href="#license">License</a></li> -->
-    <li><a href="#contact">Contact</a></li>
-    <!-- <li><a href="#acknowledgements">Acknowledgements</a></li> -->
-  </ol>
-</details>
+## Overview
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
+**Loyalty Card** is a modern, open-source RESTful service for managing loyalty programs, guests, scores, and tags. Built with Go, Fiber, and GORM, it offers a robust API, modular architecture, and full Docker support. Ideal for businesses, developers, and open-source contributors looking for a scalable and extensible loyalty management backend.
 
-REST application for loyalty card management.
+---
 
-<!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
-<!--
-Here's a blank template to get started:
-**To avoid retyping too much info. Do a search and replace with your text editor for the following:**
-`github_username`, `repo_name`, `twitter_handle`, `email`, `project_title`, `project_description` -->
+## Demo & API Docs
 
-### Built With
+- **Swagger/OpenAPI Documentation:** [View API Docs](app/rest/docs/swagger.yaml)
+- **Live Swagger UI:** `/api/v1/swagger/index.html` (when running the service)
 
-- [Go Lang](https://golang.org/)
-- List all: `go list -m all`
+---
 
-<!-- GETTING STARTED -->
+## Features
+- **RESTful API** for managing guests, scores, and tags
+- **Modular Go codebase** with clear separation of concerns
+- **CLI support** via Cobra
+- **OpenAPI/Swagger** auto-generated documentation
+- **Dockerized** for easy deployment
+- **Makefile** for streamlined development workflows
+- **Environment-based configuration**
+- **PostgreSQL & SQLite** support via GORM
+- **Extensible and open for contributions**
+
+---
+
 ## Getting Started
 
-To get a local copy up and running follow these simple steps.
-
 ### Prerequisites
+- [Go 1.18+](https://golang.org/dl/)
+- [Docker & Docker Compose](https://docs.docker.com/get-docker/)
 
-- Hiring a kubernetes cluster:
-  - [AWS](https://aws.amazon.com/pt/eks/?whats-new-cards.sort-by=item.additionalFields.postDateTime&whats-new-cards.sort-order=desc&eks-blogs.sort-by=item.additionalFields.createdDate&eks-blogs.sort-order=desc)
-  - [Azure](https://azure.microsoft.com/pt-br/services/kubernetes-service/)
-  - [GCP](https://cloud.google.com/kubernetes-engine)
+### Quickstart (Docker Compose)
+```sh
+git clone https://github.com/patricksferraz/loyalty-card.git
+cd loyalty-card
+cp .env.example .env
+# Edit .env as needed (set REST_PORT, DB_DEBUG, DSN)
+docker-compose up -d
+```
 
-- [Kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
+### Manual Setup (Go)
+```sh
+git clone https://github.com/patricksferraz/loyalty-card.git
+cd loyalty-card
+cp .env.example .env
+# Edit .env as needed
+go mod tidy
+go run main.go
+```
 
-- Create a secrets: see "_k8s/instructions.md_"
+### Environment Variables
+See `.env.example`:
+- `REST_PORT` - Port for REST API
+- `DB_DEBUG` - Enable DB debug logs
+- `DSN` - Database connection string
 
-### Deploy
+---
 
-- `kubectl apply -f ./k8s`
+## Usage
 
-<!-- USAGE EXAMPLES -->
-<!-- ## Usage
+### API Endpoints
+All endpoints are prefixed with `/api/v1`.
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+#### Guests
+- `POST   /guests` - Create a new guest
+- `GET    /guests/{guest_id}` - Retrieve guest by ID
 
-_For more examples, please refer to the [Documentation](https://example.com)_ -->
+#### Scores
+- `POST   /scores` - Create a new score
+- `GET    /scores/{score_id}` - Retrieve score by ID
+- `POST   /scores/{score_id}/use` - Use a score
+- `POST   /scores/{score_id}/tags` - Add a tag to a score
 
-<!-- ROADMAP -->
-## Roadmap
+#### Tags
+- `POST   /tags` - Create a new tag
+- `GET    /tags` - Search tags
+- `GET    /tags/{tag_id}` - Retrieve tag by ID
 
-See the [open issues](https://github.com/patricksferraz/loyalty-card/issues) for a list of proposed features (and known issues).
+### Example: Create a Guest
+```sh
+curl -X POST http://localhost:<REST_PORT>/api/v1/guests \
+  -H 'Content-Type: application/json' \
+  -d '{"name": "John Doe", "doc": "123456789"}'
+```
 
-<!-- CONTRIBUTING -->
-## Contributing
+### API Documentation
+- [Swagger YAML](app/rest/docs/swagger.yaml)
+- [Swagger JSON](app/rest/docs/swagger.json)
+- Live Swagger UI: `http://localhost:<REST_PORT>/api/v1/swagger/index.html`
 
-Any contributions you make are **greatly appreciated**.
+---
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+## Development
 
-**Prerequisites**:
+### Makefile Commands
+- `make build`   - Build Docker image
+- `make up`      - Start services (Docker Compose)
+- `make down`    - Stop and remove containers
+- `make logs`    - Tail logs
+- `make gtest`   - Run Go tests with coverage
+- `make attach`  - Open shell in running container
 
-- Golang
+### Running Tests
+```sh
+make gtest
+```
 
-  ```sh
-  wget https://golang.org/dl/go1.18.linux-amd64.tar.gz
-  rm -rf /usr/local/go && tar -C /usr/local -xzf go1.18.linux-amd64.tar.gz
-  export PATH=$PATH:/usr/local/go/bin
-  ```
+### Contributing
+Contributions are welcome! Please open issues or submit pull requests. For major changes, open a discussion first.
 
-- Docker and docker-compose
+---
 
-  ```sh
-  sudo apt-get install docker docker-compose docker.io -y
-  ```
+## Tech Stack
+- **Language:** Go 1.18+
+- **Web Framework:** [Fiber](https://gofiber.io/)
+- **ORM:** [GORM](https://gorm.io/)
+- **CLI:** [Cobra](https://github.com/spf13/cobra)
+- **API Docs:** [Swagger/OpenAPI](https://swagger.io/)
+- **Containerization:** Docker, Docker Compose
+- **Database:** PostgreSQL, SQLite
 
-- Environment: see "_.env.example_"
+---
 
-**Installation**:
+## License
 
-1. Clone the repo
+This project is licensed under the [GNU GPLv3](LICENSE).
 
-   ```sh
-   git clone https://github.com/patricksferraz/loyalty-card.git
-   ```
+---
 
-2. Run
+## Contact & Community
+- **Author:** Patrick Ferraz
+- **Email:** patrick.ferraz@coding4u.tech
+- **GitHub Issues:** [Report bugs or request features](https://github.com/patricksferraz/loyalty-card/issues)
+- **Discussions:** [Join the conversation](https://github.com/patricksferraz/loyalty-card/discussions)
 
-   ```sh
-   make up
-   ```
+---
 
-3. Test
-
-   ```sh
-   make gtest
-   ```
-
-**Installation in local kubernetes**:
-
-1. Install [k3d](https://k3d.io/), [Kind](https://kind.sigs.k8s.io/) or similar
-2. Install [Kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) and [Helm](https://helm.sh/)
-3. Follow the steps of [Getting Started](#getting-started)
-    - Connect to cluster and run:
-
-      `kubectl apply -f k8s/`
-<!-- LICENSE -->
-<!-- ## License -->
-
-<!-- Distributed under the MIT License. See `LICENSE` for more information. -->
-
-<!-- CONTACT -->
-## Contact
-
-patricksferraz - patrick.ferraz@outlook.com
-
-Project Link: [loyalty-card](https://github.com/patricksferraz/loyalty-card)
-
-<!-- ACKNOWLEDGEMENTS -->
-<!-- ## Acknowledgements
-
-* []()
-* []()
-* []() -->
+## Acknowledgements
+- [Fiber](https://gofiber.io/)
+- [GORM](https://gorm.io/)
+- [Cobra](https://github.com/spf13/cobra)
+- [Swagger](https://swagger.io/)
+- [Docker](https://www.docker.com/)
+- Open-source community
